@@ -6,19 +6,19 @@ public class BankAccount {
     private double balance;
     private double minBalance;
 
-    //**************Setters*********************
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public void setMinBalance(double minBalance) {
-        this.minBalance = minBalance;
-    }
-    //****************Getters************************
+//    //**************Setters*********************
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void setBalance(double balance) {
+//        this.balance = balance;
+//    }
+//
+//    public void setMinBalance(double minBalance) {
+//        this.minBalance = minBalance;
+//    }
+//    //****************Getters************************
     public String getName() {
         return name;
     }
@@ -30,7 +30,7 @@ public class BankAccount {
     public double getMinBalance() {
         return minBalance;
     }
-
+//
 
     //*********Constructor**************
     public BankAccount(String name, double balance, double minBalance) {
@@ -65,18 +65,21 @@ public class BankAccount {
             acountNumber += "0";
             count++;
         }
+
+        //System.out.println(acountNumber);
         return acountNumber;
     }
 
     public void deposit(double amount) {
         //add amount to balance
-        balance += amount;
+        if(amount > 0)
+            balance += amount;
 
     }
 
     public void withdraw(double amount) throws Exception {
         // Remember to throw "Insufficient Balance" exception, if the remaining amount would be less than minimum balance
-        if(balance - amount <= minBalance)
+        if(balance - amount < minBalance)
             throw new Exception("Insufficient Balance");
         else
             balance -= amount;

@@ -41,10 +41,11 @@ public class CurrentAccount extends BankAccount{
         }
         if(temp == n - 1)
             return;
-        int freq [] = new int[26];
+        int [] freq = new int[26];
 
         for(int i = 0; i < n; i++)
-            freq[(tradeLicenseId.charAt(i) - 'A')]++;
+            freq[tradeLicenseId.charAt(i) - 'A']++;
+
         int max = 0;
         int letter = 0;
 
@@ -57,6 +58,8 @@ public class CurrentAccount extends BankAccount{
 
         if(max > (n + 1) / 2)
             throw new Exception("Valid License can not be generated");
+
+
         char [] ch = new char[n];
 
         for(int i = 0; i < n; i += 2){

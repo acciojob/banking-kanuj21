@@ -7,17 +7,17 @@ public class BankAccount {
     private double minBalance;
 
 //    //**************Setters*********************
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public void setBalance(double balance) {
-//        this.balance = balance;
-//    }
-//
-//    public void setMinBalance(double minBalance) {
-//        this.minBalance = minBalance;
-//    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setMinBalance(double minBalance) {
+        this.minBalance = minBalance;
+    }
 //    //****************Getters************************
     public String getName() {
         return name;

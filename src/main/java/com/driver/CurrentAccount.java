@@ -28,57 +28,85 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
-        int n = tradeLicenseId.length();
-        int temp = 0;
 
-        for(int i = 0; i < n - 1; i++){
-            if(tradeLicenseId.charAt(i) == tradeLicenseId.charAt(i + 1))
-                break;
-            else {
-                if(tradeLicenseId.charAt(i) != tradeLicenseId.charAt(i + 1))
-                    temp++;
-            }
+
+        if(!isLicenseValid(tradeLicenseId)){
+            if(!isPossibleID(tradeLicenseId))
+                throw new Exception("Valid License can not be generated");
+            else
+                tradeLicenseId = rearrange(tradeLicenseId);
         }
-        if(temp == n - 1)
-            return;
+        else {
+            this.tradeLicenseId = tradeLicenseId;
+        }
+
+    }
+
+
+    public boolean isLicenseValid(String lcs){
+        for(int i = 0; i < lcs.length() - 1; i++){
+            if(tradeLicenseId.charAt(i) == tradeLicenseId.charAt(i + 1))
+                return false;
+
+        }
+        return true;
+    }
+
+    public boolean isPossibleID(String lcs){
         int [] freq = new int[26];
+        for(int i = 0; i < lcs.length(); i++){
+            freq[lcs.charAt(i) - 'A']++;
 
-        for(int i = 0; i < n; i++)
-            freq[tradeLicenseId.charAt(i) - 'A']++;
+            if(freq[lcs.charAt(i) - 'A'] >= (lcs.length() + 1) / 2)
+                return false;
+        }
 
-        int max = 0;
-        int letter = 0;
+        return true;
+
+    }
+    public String rearrange(String lcs){
+        //String res = "";
+        int n = lcs.length();
+        int [] freq = new int[26];
+        char maxOcc = '0';
+        int maxFreq = 0;
+
+        for(int i = 0; i < n; i++){
+            char ch = lcs.charAt(i);
+            freq[ch - 'A']++;
+
+            if(freq[ch - 'A'] > maxFreq){
+                maxFreq = freq[ch - 'A'];
+                maxOcc = ch;
+            }
+
+        }
+
+        char [] res = new char[n];
+
+        int ind = 0;
+
+        while(freq[maxOcc - 'A'] > 0){
+            res[ind] = maxOcc;
+            ind += 2;
+            freq[maxOcc - 'A']--;
+        }
 
         for(int i = 0; i < 26; i++){
-            if(max < freq[i]){
-                max = freq[i];
-                letter = i;
+            int f = freq[i];
+
+            while(f > 0){
+                if(ind >= n)
+                    ind = 1;
+                res[ind] = (char) (i + 'A');
+                ind += 2;
             }
         }
 
-        if(max > (n + 1) / 2)
-            throw new Exception("Valid License can not be generated");
 
 
-        char [] ch = new char[n];
 
-        for(int i = 0; i < n; i += 2){
-            if(freq[letter] > 0){
-                ch[i] = (char) (letter + 'A');
-                freq[letter]--;
-            }
-            else {
-                for(int j = 0; j < 26; j++){
-                    if(freq[j] > 0){
-                        letter = j;
-                        break;
-                    }
-                }
-                ch[i] = (char) (letter + 'A');
-                freq[letter]--;
-            }
-        }
-        tradeLicenseId = String.valueOf(ch);
+        return String.valueOf(res);
     }
 
 }
